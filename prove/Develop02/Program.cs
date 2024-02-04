@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.CompilerServices;
 class Program
 {
     static List<Entry> journal = new List<Entry>();
@@ -94,11 +97,12 @@ class Program
             Console.Write("Enter filename to save: "); //ask you to save the file under a name
             string filename = Console.ReadLine();
 
-            using (StreamWriter writer = new StreamWriter(filename))
+
+            using (StreamWriter outputFile = new StreamWriter(filename))
             {
                 foreach (var entry in journal)
                 {
-                    writer.WriteLine($"{entry.Date},{entry.Prompt},{entry.Response}");
+                    outputFile.WriteLine($"{entry.Date},{entry.Prompt},{entry.Response}");
                 }
             }
 
@@ -116,7 +120,12 @@ class Program
                 return;
             }
 
+            string[] lines = System.IO.File.ReadAllLines(filename);
 
+            foreach (string line in lines)
+            {
+                Console.WriteLine(line);
+            }
 
             Console.WriteLine("Journal loaded from file.");
         }
@@ -128,7 +137,6 @@ class Entry
     public string Prompt { get; }
     public string Response { get; }
     public DateTime Date { get; }
-
     public Entry(string prompt, string response, DateTime date)
     {
         Prompt = prompt;
