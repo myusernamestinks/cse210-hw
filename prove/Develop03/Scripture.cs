@@ -1,25 +1,57 @@
 using System;
-using System.Collections.Generics;
+using System.Collections.Generic;
+using System.Linq;
 
 class Scripture
 {
-    private string text;
-    private string verseRange;
-    private List<Verse> verses;
+    private string _text;
+    private List<Word> _words;
+    private HashSet<int> _hiddenIndices;
 
-    public Scripture(string text)
+    public string Reference { get; private set; }
+    public string Text { get; private set; }
+    public bool AllWordsHidden => _words.All(w => w.Hidden);
+
+    public Scripture(string reference, string text)
     {
-        this.text = text;
-        verseRange ="";
-        verses = new List<Verse>();
+        Reference = reference;
+        Text = text;
+        InitializeWords();
+        _hiddenIndices = new HashSet<int>();
     }
 
-
-    public Scripture(string text, string verseRange)
+    private void InitializeWords()
     {
-        this.text = text;
-        this.verseRange = verseRange;
-        verses = new List<Verse>();
-        
+        _words = Text.Split(new[] { ' ', '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                      .Select(word => new Word(word))
+                      .ToList();
+    }
+
+    public void HideWords(Random random)
+    {
+    
+        while (true)
+        {
+            int index = random.Next(0, _words.Count);
+            if (!_hiddenIndices.Contains(index))
+            {
+                _words[index].Hide();
+                _hiddenIndices.Add(index);
+                break;
+            }
+        }
+    }
+
+    public void Display()
+    {
+        Console.Clear();
+
+        foreach (Word word in _words)
+        {
+            Console.Write(word.Hidden ? "_____" : word.Text);
+            Console.Write(" ");
+        }
+
+        Console.WriteLine();
     }
 }
