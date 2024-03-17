@@ -9,11 +9,13 @@ class SimpleGoal : BaseGoal
 
     public override int Complete()
     {
-        return value;
+        timesCompleted++; 
+        totalPoints += value; 
+        return value; 
     }
 
     public override string DisplayStatus()
     {
-        return "Simple Goal: " + goalName;
+        return $"Simple Goal: {goalName} - Completed {timesCompleted} times";
     }
 }

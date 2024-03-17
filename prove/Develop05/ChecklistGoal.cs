@@ -3,7 +3,6 @@ using System;
 [Serializable]
 class ChecklistGoal : BaseGoal
 {
-    private int completionCount;
     private int totalRequired;
 
     public ChecklistGoal(string goalName, int value, int totalRequired) : base(goalName, value)
@@ -13,10 +12,12 @@ class ChecklistGoal : BaseGoal
 
     public override int Complete()
     {
-        completionCount++;
-        if (completionCount >= totalRequired)
+        timesCompleted++; 
+        totalPoints += value; 
+        if (timesCompleted >= totalRequired)
         {
-            return value + 500;
+            totalPoints += 500; 
+            return value + 500; 
         }
         else
         {
@@ -26,6 +27,7 @@ class ChecklistGoal : BaseGoal
 
     public override string DisplayStatus()
     {
-        return $"Checklist Goal: {goalName} - Completed {completionCount}/{totalRequired} times";
+        return $"Checklist Goal: {goalName} - Completed {timesCompleted}/{totalRequired} times";
     }
 }
+
