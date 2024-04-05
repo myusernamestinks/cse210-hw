@@ -30,6 +30,6 @@ public class Bicycle : Activity
         double speed = GetSpeed();
         double pace = GetPace();
 
-        return base.GetSummary() + $" - Distance: {distance} miles, Speed: {speed} mph, Pace: {pace} min/mile";
+        return base.GetSummary() + $" Bicycle - Distance: {distance} miles, Speed: {speed} mph, Pace: {pace} min/mile";
     }
 }

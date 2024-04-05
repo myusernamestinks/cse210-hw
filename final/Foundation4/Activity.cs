@@ -15,7 +15,6 @@ public class Activity
     {
         return 0;
     }
-
     public virtual double GetSpeed()
     {
         return 0;
