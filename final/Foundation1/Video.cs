@@ -24,8 +24,7 @@ public class Video
     }
     public int GetNumComments()
     {
-        Random rand = new Random();
-        return rand.Next(3, 87233);
+        return comments.Count;
     }
     public void DisplayInfo()
     {
